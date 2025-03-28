@@ -55,9 +55,7 @@ public:
     /**
      * @brief: Inicializa el motor del juego
      */
-    void start(const PlayerInfo& player){
-        m_player = player; //1er correcion: Guardo informacion del jugador en la clase Engine
-    }
+    void start(const PlayerInfo& player);
 
 private:
     /**
