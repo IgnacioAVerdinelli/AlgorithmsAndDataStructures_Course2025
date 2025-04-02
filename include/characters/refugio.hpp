@@ -1,12 +1,14 @@
 #ifndef REFUGIO_HPP
 #define REFUGIO_HPP
 
+#include "engine.hpp"
+#include "engineData.hpp"
 #include "entidadGenerica.hpp"
+#include "list.hpp"
 #include "wrapperVector.hpp"
 #include <iostream>
 #include <string>
 #include <utility>
-#include "list.hpp"
 
 /**
  * @class Refugio
@@ -17,28 +19,43 @@
  */
 class Refugio : public EntidadGenerica
 {
-    struct Visitante {
+
+    /**
+     * @struct Visitante
+     * @brief Representa un visitante del refugio
+     *
+     * Contiene el nombre y la facción del visitante.
+     */
+    struct Visitante
+    {
         std::string nombre;
-        std::string faccion;
+        EngineData::Faction faccion;
     };
+
 private:
-    float m_defense;                                          ///< Nivel de defensa del refugio
-    float m_attack;                                           ///< Capacidad de ataque del refugio
+    double m_defense;                                         ///< Nivel de defensa del refugio
+    double m_attack;                                          ///< Capacidad de ataque del refugio
     wrapperVector<std::string> m_refugees;                    ///< Lista de moradores dentro del refugio
     wrapperVector<std::pair<std::string, float>> m_resources; ///< Lista de recursos con su cantidad
-    DoublyLinkedList<Visitante>* m_visitants;                  ///< Lista de visitantes registrados
+    DoublyLinkedList<Visitante>* m_visitants;                 ///< Lista de visitantes registrados
+
+    std::string m_leader; ///< Nombre del líder del refugio
 
     void printRecursive(DoublyListNode<Visitante>* mNode);
+
+    /**
+     * @brief Devuelve la faccion en formato de string para su impresion.
+     */
+    std::string faccionToString(EngineData::Faction faccion) const;
 
 public:
     /**
      * @brief Constructor del refugio
      *
      * @param name Nombre del refugio
-     * @param defense Nivel de defensa inicial
-     * @param attack Nivel de ataque inicial
+     * @param leader Nombre del líder del refugio
      */
-    Refugio(const std::string& name, float defense, float attack);
+    Refugio(const std::string& name, const std::string& leader);
 
     /**
      * @brief Muestra la información del refugio
@@ -48,7 +65,7 @@ public:
     /**
      * @brief Ejecuta una acción específica del refugio
      */
-    void doAction() const override;
+    void doAction() const;
 
     /**
      * @brief Agrega un morador al refugio
@@ -76,7 +93,7 @@ public:
      * @param nombre Nombre del visitante
      * @param faccion Facción del visitante
      */
-    void registerVisitant(const std::string& nombre, const std::string& faccion);
+    void registerVisitant(const std::string& nombre, EngineData::Faction faccion);
 
     /**
      * @brief Muestra todos los visitantes registrados
@@ -86,7 +103,14 @@ public:
     /**
      * @brief Busca si una facción ha visitado el refugio
      */
-    bool hasFactionVisited(const std::string& faccion) const;
+    bool hasFactionVisited(EngineData::Faction faccion) const;
+
+    /**
+     *
+     * @param faccion Faccion a verificar si es segura.
+     * @return Booleano si es segura o no.
+     */
+    bool isSafeFaction(EngineData::Faction faccion) const;
 };
 
 #endif // REFUGIO_HPP
