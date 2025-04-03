@@ -70,6 +70,31 @@ void Refugio::printRecursive(DoublyListNode<Visitante>* mNode)
     }
 }
 
+struct Nodo {
+    std::string m_faccion;
+    Nodo* next;
+
+    Nodo(std::string nombre) : m_faccion(nombre), next(nullptr) {}
+};
+
+// Función recursiva para buscar una facción en la lista
+bool searchFaction(Nodo* head, const std::string& nombre) {
+    if (head == nullptr) return false;
+    if (head->m_faccion == nombre) return true;
+    return searchFaction(head->next, nombre);
+}
+
+bool Refugio::hasFactionVisited(EngineData::Faction faccion) const 
+{
+    DoublyListNode<Visitante>* head = m_visitants->get_head();
+    while (head != nullptr) {
+        if (head->data.faccion == faccion) {
+            return true;
+        }
+        head = head->next;
+    }
+    return false;
+}
 
 bool Refugio::isSafeFaction(const EngineData::Faction faccion) const
 {

@@ -99,7 +99,7 @@ public:
      * @brief Muestra todos los visitantes registrados
      */
     void showVisits();
-
+    
     /**
      * @brief Busca si una facción ha visitado el refugio
      */
