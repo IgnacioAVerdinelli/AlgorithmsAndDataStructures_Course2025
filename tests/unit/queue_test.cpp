@@ -2,7 +2,6 @@
 #include <gtest/gtest.h>
 #include "queue.hpp"
 
-/** ===== BORRAME CUANDO TENGAS TODO LISTO =====
 TEST(QueueTest, EnqueueDequeueFront) {
     Queue<int> q;
     EXPECT_TRUE(q.isEmpty());
@@ -33,4 +32,3 @@ TEST(QueueTest, QueueSize) {
     q.dequeue();
     EXPECT_EQ(q.getSize(), 1);
 }
-===== BORRAME CUANDO TENGAS TODO LISTO ===== */
